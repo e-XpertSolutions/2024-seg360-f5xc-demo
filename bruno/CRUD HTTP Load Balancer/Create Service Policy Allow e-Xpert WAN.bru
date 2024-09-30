@@ -1,0 +1,36 @@
+meta {
+  name: Create Service Policy Allow e-Xpert WAN
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/service_policys
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "metadata": {
+      "name": "seg-allow-e-xpert-wan",
+      "description": "Allows WAN IPs from e-Xpert owned public subnets",
+      "disable": false
+    },
+    "spec": {
+      "any_server": {},
+      "allow_list": {
+        "prefix_list": {
+          "prefixes": [
+            "46.14.179.0/27",
+            "83.166.158.32/27",
+            "81.63.137.43/32"
+          ]
+        },
+        "country_list": [],
+        "tls_fingerprint_classes": [],
+        "default_action_next_policy": {}
+      }
+    }
+  }
+}

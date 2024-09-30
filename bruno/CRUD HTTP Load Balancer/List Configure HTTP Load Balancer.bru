@@ -1,0 +1,22 @@
+meta {
+  name: List Configure HTTP Load Balancer
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/http_loadbalancers
+  body: none
+  auth: inherit
+}
+
+headers {
+  accept: application/json
+  Access-Control-Allow-Origin: *
+  x-volterra-apigw-tenant: null
+}
+
+assert {
+  res.status: eq 200
+  res.body.items[1].name: eq tde-nginx-lab
+}

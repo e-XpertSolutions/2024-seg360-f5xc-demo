@@ -1,0 +1,22 @@
+meta {
+  name: Get AWS-VPC-Site seg-aws-site
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{basename}}/api/config/namespaces/system/aws_vpc_sites/seg-aws-site
+  body: none
+  auth: inherit
+}
+
+vars:post-response {
+  workload_subnet_id: res.body.spec.cloud_site_info.subnet_ids[0].workload_subnet.id
+}
+
+assert {
+  res.body.spec.site_state: neq FAILED
+  res.body.spec.validation_state: eq VALIDATION_SUCCEEDED
+  res.body.spec.cloud_site_info.subnet_ids: length 1
+  res.body.spec.cloud_site_info.subnet_ids[0].workload_subnet.id: isDefined 
+}

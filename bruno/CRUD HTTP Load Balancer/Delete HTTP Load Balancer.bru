@@ -1,0 +1,11 @@
+meta {
+  name: Delete HTTP Load Balancer
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/http_loadbalancers/{{http_lb_name}}
+  body: none
+  auth: inherit
+}

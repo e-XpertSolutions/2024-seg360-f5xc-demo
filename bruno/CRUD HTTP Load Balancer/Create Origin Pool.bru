@@ -1,0 +1,60 @@
+meta {
+  name: Create Origin Pool
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/origin_pools
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "metadata": {
+      "name": "seg-nginx-origin-auto",
+      "description": "Origin pool for load balanced NGINX application automatically created",
+      "disable": false
+    },
+    "spec": {
+      "origin_servers": [
+        {
+          "private_name": {
+            "dns_name": "tdenginxce.labo.e-xpertsolutions.lan",
+            "refresh_interval": 300,
+            "site_locator": {
+              "site": {
+                "tenant": "f5-channel-rwtqhrvn",
+                "namespace": "system",
+                "name": "tdef5xcsite",
+                "kind": "site"
+              }
+            },
+            "outside_network": {}
+          }
+        }
+      ],
+      "use_tls": {
+        "use_host_header_as_sni": {},
+        "tls_config": {
+          "default_security": {}
+        },
+        "use_server_verification": {
+          "trusted_ca": {
+            "tenant": "f5-channel-rwtqhrvn",
+            "namespace": "expertsolutions-partner-emea",
+            "name": "seg-nginx-appcert-auto",
+            "kind": "trusted_ca_list"
+          }
+        },
+        "no_mtls": {}
+      },
+      "port": 443,
+      "same_as_endpoint_port": {},
+      "healthcheck": [],
+      "loadbalancer_algorithm": "LB_OVERRIDE",
+      "endpoint_selection": "LOCAL_PREFERRED"
+    }
+  }
+}

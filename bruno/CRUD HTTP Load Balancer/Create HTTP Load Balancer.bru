@@ -1,0 +1,106 @@
+meta {
+  name: Create HTTP Load Balancer
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/http_loadbalancers
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "metadata": {
+      "name": "{{http_lb_name}}",
+      "description": "Automatically deployed load balancer for the NGINX lab application",
+      "disable": false
+    },
+    "spec": {
+      "domains": [
+        "seg.labo.e-xpertsolutions.lan"
+      ],
+      "https": {
+        "http_redirect": false,
+        "add_hsts": false,
+        "port": 443,
+        "default_header": {},
+        "enable_path_normalize": {},
+        "non_default_loadbalancer": {},
+        "header_transformation_type": {
+          "legacy_header_transformation": {}
+        },
+        "connection_idle_timeout": 120000,
+        "tls_cert_params": {
+          "tls_config": {
+            "default_security": {}
+          },
+          "certificates": [
+            {
+              "tenant": "f5-channel-rwtqhrvn",
+              "namespace": "expertsolutions-partner-emea",
+              "name": "seg-selfsigned-re-cert",
+              "kind": "certificate"
+            }
+          ],
+          "no_mtls": {}
+        },
+        "http_protocol_options": {
+          "http_protocol_enable_v1_v2": {}
+        }
+      },
+      "advertise_on_public_default_vip": {},
+      "default_route_pools": [
+        {
+          "pool": {
+            "tenant": "f5-channel-rwtqhrvn",
+            "namespace": "expertsolutions-partner-emea",
+            "name": "seg-nginx-origin-auto",
+            "kind": "origin_pool"
+          },
+          "weight": 1,
+          "priority": 1,
+          "endpoint_subsets": {}
+        }
+      ],
+      "disable_waf": {},
+      "add_location": true,
+      "no_challenge": {},
+      "more_option": {
+        "request_headers_to_add": [
+          {
+            "name": "X-Forwarded-Host",
+            "value": "seg.labo.e-xpertsolutions.lan",
+            "append": false
+          }
+        ],
+        "max_request_header_size": 60,
+        "idle_timeout": 30000,
+        "disable_default_error_pages": false
+      },
+      "user_id_client_ip": {},
+      "disable_rate_limit": {},
+      "active_service_policies": {
+        "policies": [
+          {
+            "tenant": "f5-channel-rwtqhrvn",
+            "namespace": "expertsolutions-partner-emea",
+            "name": "seg-allow-e-xpert-wan",
+            "kind": "service_policy"
+          }
+        ]
+      },
+      "round_robin": {},
+      "disable_trust_client_ip_headers": {},
+      "disable_malicious_user_detection": {},
+      "disable_api_discovery": {},
+      "disable_bot_defense": {},
+      "disable_api_definition": {},
+      "disable_ip_reputation": {},
+      "disable_client_side_defense": {},
+      "system_default_timeouts": {},
+      "l7_ddos_action_default": {}
+    }
+  }
+}

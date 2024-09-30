@@ -1,0 +1,5 @@
+aws_f5xc_access_key             = "CHANGE_ME"
+aws_f5xc_secret_key_blindfolded = "CHANGE_ME"
+aws_ssh_key                     = "CHANGE_ME"
+aws_ecs_access_key              = "CHANGE_ME"
+aws_ecs_secret_key              = "CHANGE_ME"

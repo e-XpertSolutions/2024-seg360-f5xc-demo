@@ -1,0 +1,11 @@
+meta {
+  name: Liste Sites
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{basename}}/api/config/namespaces/system/sites
+  body: none
+  auth: inherit
+}

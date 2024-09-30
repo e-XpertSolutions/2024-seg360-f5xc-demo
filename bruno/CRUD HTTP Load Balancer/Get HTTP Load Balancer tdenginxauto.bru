@@ -1,0 +1,11 @@
+meta {
+  name: Get HTTP Load Balancer tdenginxauto
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{basename}}/api/config/namespaces/{{namespace}}/http_loadbalancers/{{http_lb_name}}
+  body: none
+  auth: inherit
+}

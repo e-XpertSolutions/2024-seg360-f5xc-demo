@@ -1,0 +1,13 @@
+headers {
+  Access-Control-Allow-Origin: *
+  x-volterra-apigw-tenant: f5-channel
+  accept: application/json
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: APIToken {{auth_token}}
+}
